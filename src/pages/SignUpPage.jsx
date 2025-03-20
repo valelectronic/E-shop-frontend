@@ -76,7 +76,7 @@ e.preventDefault()
 								size={18}
 								className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-500" // <-- FIXED ICON COLOR
 							/>
-							<input
+							<Input
 								type={showPassword ? "text" : "password"}
 								placeholder="Password"
 								value={password}
