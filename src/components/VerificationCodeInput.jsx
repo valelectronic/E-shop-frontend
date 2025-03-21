@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Key } from "lucide-react";
 
-export default function VerificationCodeInput({ length = 6, onSendCode, email }) {
+export default function VerificationCodeInput({ length = 6, isValidEmail }) {
     const [otp, setOtp] = useState(Array(length).fill(""));
     const [countdown, setCountdown] = useState(0);
 
@@ -16,7 +16,7 @@ export default function VerificationCodeInput({ length = 6, onSendCode, email })
     }, [countdown]);
 
     const handleChange = (index, value) => {
-        if (!/^\d*$/.test(value)) return; // Allow only numbers
+        if (isNaN(value)) return;
         let newOtp = [...otp];
         newOtp[index] = value.slice(-1);
         setOtp(newOtp);
@@ -33,8 +33,8 @@ export default function VerificationCodeInput({ length = 6, onSendCode, email })
     };
 
     const handleSendCode = () => {
+        if (!isValidEmail) return; // Prevent sending if email is invalid
         setCountdown(900); // Start 15-minute countdown (900 seconds)
-        if (onSendCode) onSendCode(); // Call API to send OTP
     };
 
     const formatTime = (seconds) => {
@@ -48,9 +48,9 @@ export default function VerificationCodeInput({ length = 6, onSendCode, email })
             {/* Send Code Button */}
             <button
                 onClick={handleSendCode}
-                disabled={!email || countdown > 0} // Disable if email is empty
+                disabled={!isValidEmail || countdown > 0}
                 className={`w-full py-2 rounded-md text-white font-medium transition 
-                ${!email || countdown > 0 ? "bg-gray-600 cursor-not-allowed" : "bg-green-500 hover:bg-green-600"}`}
+                ${!isValidEmail || countdown > 0 ? "bg-gray-600 cursor-not-allowed" : "bg-green-500 hover:bg-green-600"}`}
             >
                 {countdown > 0 ? `Resend Code in ${formatTime(countdown)}` : "Send Code"}
             </button>
@@ -63,15 +63,14 @@ export default function VerificationCodeInput({ length = 6, onSendCode, email })
                         <input
                             key={index}
                             id={`otp-${index}`}
-                            type="text"
-                            inputMode="numeric" // Mobile-friendly number keyboard
-                            pattern="[0-9]*" // Ensure only numbers
+                            type="tel"
+                            pattern="[0-9]*"
+                            inputMode="numeric"
                             value={digit}
                             onChange={(e) => handleChange(index, e.target.value)}
                             onKeyDown={(e) => handleKeyDown(index, e)}
                             maxLength="1"
-                            className="w-10 h-10 text-center text-lg bg-gray-800 border border-gray-700 rounded-md 
-                            focus:ring-2 focus:ring-green-500 text-white"
+                            className="w-10 h-10 text-center text-lg bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-green-500 text-white"
                         />
                     ))}
                 </div>

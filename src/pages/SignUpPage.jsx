@@ -14,6 +14,23 @@ const [name, setName] = useState("")
 const [email, setEmail] = useState("")
 const[password, setPassword] = useState("")
 const [showPassword, setShowPassword] = useState(false)
+const [isValidEmail, setIsValidEmail] = useState(false);
+
+// Function to validate email format
+const validateEmail = (email) => {
+  return /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/.test(email);
+};
+
+// Handle email input change
+const handleEmailChange = (e) => {
+  const newEmail = e.target.value;
+  setEmail(newEmail);
+
+  const isValid = validateEmail(newEmail);
+  console.log("Is Email Valid?", isValid); // Debugging
+
+  setIsValidEmail(isValid);
+};
 
 const handleSignUp = async(e)=>{
 e.preventDefault()
@@ -43,12 +60,12 @@ e.preventDefault()
                 type = "email"
                 placeholder = "email address  "
                 value = {email}
-                onChange = {(e)=> setEmail(e.target.value)}
+                onChange = {handleEmailChange}
                 />
               
                 {/* input for verification code  */}
                 <div className='mb-6 space-y-2'>
-                <VerificationCodeInput length={6} email={email} onSendCode={() => console.log("Sending code...")}/>
+                <VerificationCodeInput length={6} isValidEmail={isValidEmail}/>
                 </div>
                 
                 {/* input for full name  */}
