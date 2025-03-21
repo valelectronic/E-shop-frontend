@@ -18,11 +18,6 @@ const [showPassword, setShowPassword] = useState(false)
 const handleSignUp = async(e)=>{
 e.preventDefault()
 }
-console.log("User:", User);
-console.log("Mail:", Mail);
-console.log("Lock:", Lock);
-console.log("Eye:", Eye);
-console.log("EyeOff:", EyeOff);
   return (
     <motion.div 
     initial={{ opacity: 0, y: 20 }}
@@ -31,7 +26,7 @@ console.log("EyeOff:", EyeOff);
     className='max-w-md w-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl 
     overflow-hidden'>
         <div className='p-8'>
-            <h2 className='text-3xl font-bold mb-6 text-center
+            <h2 className='text-2xl font-bold mb-6 text-center
             bg-gradient-to-r from-green-400 to-emerald-500
             text-transparent bg-clip-text uppercase'>
                 create account
@@ -40,7 +35,7 @@ console.log("EyeOff:", EyeOff);
             
             
 
-            <form onSubmit={handleSignUp}>
+            <form onSubmit={handleSignUp} className='space-y-4'>
               
                 {/* input for email */}
                 <Input
@@ -52,7 +47,7 @@ console.log("EyeOff:", EyeOff);
                 />
               
                 {/* input for verification code  */}
-                <div className='mb-6'>
+                <div className='mb-6 space-y-2'>
                 <VerificationCodeInput length={6} />
                 </div>
                 
