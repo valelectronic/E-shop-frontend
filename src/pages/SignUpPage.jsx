@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import Input from '../components/input'
-import {User,Mail,Lock, Landmark,Map,Eye,EyeOff
-} from 'lucide-react'
+import Input from "../components/Details";
+import {User,Mail,Lock,Eye,EyeOff} from 'lucide-react'
 import PasswordStrengthMeter from '../components/PasswordStrengthMeter'
+import VerificationCodeInput from '../components/VerificationCodeInput';
 import { Link } from 'react-router-dom'
 
 
@@ -14,13 +14,15 @@ const [name, setName] = useState("")
 const [email, setEmail] = useState("")
 const[password, setPassword] = useState("")
 const [showPassword, setShowPassword] = useState(false)
-const [state, setState] = useState("")
-const [LGA, setLGA] = useState("")
 
 const handleSignUp = async(e)=>{
 e.preventDefault()
 }
-
+console.log("User:", User);
+console.log("Mail:", Mail);
+console.log("Lock:", Lock);
+console.log("Eye:", Eye);
+console.log("EyeOff:", EyeOff);
   return (
     <motion.div 
     initial={{ opacity: 0, y: 20 }}
@@ -35,33 +37,11 @@ e.preventDefault()
                 create account
 
             </h2>
+            
+            
 
             <form onSubmit={handleSignUp}>
-                {/* input for full name  */}
-                <Input
-                icon={User}
-                type = "text"
-                placeholder = "full name "
-                value = {name}
-                onChange = {(e)=> setName(e.target.value)}
-                />
-                {/* input for state  */}
-                  <Input
-                icon={Map}
-                type = "text"
-                placeholder = "state "
-                value = {state}
-                onChange = {(e)=> setState(e.target.value)}
-                />
-                {/* input for local government area  */}
-               
-                <Input
-                icon={Landmark}
-                type = "text"
-                placeholder = "LGA  "
-                value = {LGA}
-                onChange = {(e)=> setLGA(e.target.value)}
-                />
+              
                 {/* input for email */}
                 <Input
                 icon={Mail}
@@ -70,6 +50,21 @@ e.preventDefault()
                 value = {email}
                 onChange = {(e)=> setEmail(e.target.value)}
                 />
+              
+                {/* input for verification code  */}
+                <div className='mb-6'>
+                <VerificationCodeInput length={6} />
+                </div>
+                
+                {/* input for full name  */}
+                <Input
+                icon={User}
+                type = "text"
+                placeholder = "full name "
+                value = {name}
+                onChange = {(e)=> setName(e.target.value)}
+                />
+               
             	{/* Password with Show/Hide Feature */}
 						<div className="relative mb-4">
 							<Lock
@@ -77,6 +72,7 @@ e.preventDefault()
 								className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-500" // <-- FIXED ICON COLOR
 							/>
 							<Input
+              icon={Lock}
 								type={showPassword ? "text" : "password"}
 								placeholder="Password"
 								value={password}
