@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Key } from "lucide-react";
 
-export default function VerificationCodeInput({ length = 6, onSendCode }) {
+export default function VerificationCodeInput({ length = 6, onSendCode, email }) {
     const [otp, setOtp] = useState(Array(length).fill(""));
     const [countdown, setCountdown] = useState(0);
 
@@ -16,7 +16,7 @@ export default function VerificationCodeInput({ length = 6, onSendCode }) {
     }, [countdown]);
 
     const handleChange = (index, value) => {
-        if (isNaN(value)) return;
+        if (!/^\d*$/.test(value)) return; // Allow only numbers
         let newOtp = [...otp];
         newOtp[index] = value.slice(-1);
         setOtp(newOtp);
@@ -48,9 +48,9 @@ export default function VerificationCodeInput({ length = 6, onSendCode }) {
             {/* Send Code Button */}
             <button
                 onClick={handleSendCode}
-                disabled={countdown > 0}
+                disabled={!email || countdown > 0} // Disable if email is empty
                 className={`w-full py-2 rounded-md text-white font-medium transition 
-                ${countdown > 0 ? "bg-gray-600 cursor-not-allowed" : "bg-green-500 hover:bg-green-600"}`}
+                ${!email || countdown > 0 ? "bg-gray-600 cursor-not-allowed" : "bg-green-500 hover:bg-green-600"}`}
             >
                 {countdown > 0 ? `Resend Code in ${formatTime(countdown)}` : "Send Code"}
             </button>
@@ -64,6 +64,8 @@ export default function VerificationCodeInput({ length = 6, onSendCode }) {
                             key={index}
                             id={`otp-${index}`}
                             type="text"
+                            inputMode="numeric" // Mobile-friendly number keyboard
+                            pattern="[0-9]*" // Ensure only numbers
                             value={digit}
                             onChange={(e) => handleChange(index, e.target.value)}
                             onKeyDown={(e) => handleKeyDown(index, e)}

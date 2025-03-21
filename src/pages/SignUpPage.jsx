@@ -48,7 +48,7 @@ e.preventDefault()
               
                 {/* input for verification code  */}
                 <div className='mb-6 space-y-2'>
-                <VerificationCodeInput length={6} />
+                <VerificationCodeInput length={6} email={email} onSendCode={() => console.log("Sending code...")}/>
                 </div>
                 
                 {/* input for full name  */}
