@@ -39,14 +39,6 @@ const LoginPage = () => {
 						onChange={(e) => setEmail(e.target.value)}
 					/>
 
-					<Input
-						icon={Lock}
-						type='password'
-						placeholder='Password'
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-					/>
-              
                         {/* Password with Show/Hide Feature */}
                       <div className="relative mb-4">
                         <Lock
