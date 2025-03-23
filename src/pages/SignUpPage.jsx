@@ -27,8 +27,7 @@ const handleEmailChange = (e) => {
   setEmail(newEmail);
 
   const isValid = validateEmail(newEmail);
-  console.log("Is Email Valid?", isValid); // Debugging
-
+  
   setIsValidEmail(isValid);
 };
 

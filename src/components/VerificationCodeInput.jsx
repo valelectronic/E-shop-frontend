@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Key } from "lucide-react";
 
 export default function VerificationCodeInput({ length = 6, isValidEmail }) {
+    
     const [otp, setOtp] = useState(Array(length).fill(""));
     const [countdown, setCountdown] = useState(0);
 
